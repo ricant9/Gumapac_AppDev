@@ -1,12 +1,18 @@
+import firebase from '@react-native-firebase/app';
 import {
-    GoogleSignin,
+  GoogleSignin,
   GoogleSigninButton,
   isErrorWithCode,
   isSuccessResponse,
   statusCodes,
 } from '@react-native-google-signin/google-signin';
 
-GoogleSignin.configure();
+// Firebase app is initialized automatically with google-services.json
+
+// Configure Google Sign-In
+GoogleSignin.configure({
+  webClientId: '295315686860-jqjhu16j6t5rsjvf1meaep07brlsubvi.apps.googleusercontent.com', // From google-services.json
+});
 
 export const _signInWithGoogle = async () => {
   try {
@@ -33,4 +39,4 @@ export const _signInWithGoogle = async () => {
       // an error that's not related to google sign in occurred
     }
   }
-}
+};
