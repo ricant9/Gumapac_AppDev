@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Alert, Text, TouchableOpacity, View, ActivityIndicator, ImageBackground, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
 
 import CustomButton from '../../components/CustomButton';
@@ -9,6 +10,7 @@ import { ROUTES } from '../../utils';
 import IMG from '../../utils/images';
 import { REGISTER_REQUEST } from '../../app/reducers/authReducer';
 import { RootState } from '../../app/store';
+import type { AuthStackParamList } from '../../navigations/AuthNav';
 
 const Register: React.FC = () => {
   const [name, setName] = useState<string>('');
@@ -19,7 +21,7 @@ const Register: React.FC = () => {
   const [confirmPassword, setConfirmPassword] = useState<string>('');
   const [imageError, setImageError] = useState<boolean>(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<AuthStackParamList>>();
   const dispatch = useDispatch();
   const { isLoading, error, registerSuccess } = useSelector((state: RootState) => state.auth);
 
@@ -176,11 +178,9 @@ const Register: React.FC = () => {
 };
 
 
-const styles = {
+const styles = StyleSheet.create({
   background: {
     flex: 1,
-    width: '100%',
-    height: '100%',
     backgroundColor: '#0096C8', // Fallback blue
   },
   gradientFallback: {
@@ -257,6 +257,6 @@ const styles = {
     textDecorationLine: 'underline',
     fontSize: 14,
   },
-};
+});
 
 export default Register;

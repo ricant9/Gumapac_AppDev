@@ -1,5 +1,5 @@
 import React from 'react';
-import { Text, View, TextInput, StyleProp, ViewStyle, TextStyle } from 'react-native';
+import { Text, View, TextInput, StyleProp, ViewStyle, TextStyle, KeyboardTypeOptions } from 'react-native';
 
 interface CustomTextInputProps {
   label: string;
@@ -9,6 +9,8 @@ interface CustomTextInputProps {
   textStyle?: StyleProp<TextStyle>;
   containerStyle?: StyleProp<ViewStyle>;
   secureTextEntry?: boolean;
+  keyboardType?: KeyboardTypeOptions;
+  autoCapitalize?: 'none' | 'sentences' | 'words' | 'characters';
 }
 
 const CustomTextInput: React.FC<CustomTextInputProps> = ({
@@ -39,7 +41,5 @@ const CustomTextInput: React.FC<CustomTextInputProps> = ({
     </View>
   );
 };
-
-export default CustomTextInput;
 
 export default CustomTextInput;

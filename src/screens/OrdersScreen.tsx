@@ -14,19 +14,22 @@ import { RootState } from '../app/store';
 
 interface OrderItem {
   name: string;
+  price?: number;
+  quantity?: number;
 }
 
 interface Order {
   id: string;
   status: string;
-  created_at: string;
+  createdAt: string;
   total: number;
+  address?: string;
   items: OrderItem[];
 }
 
 const OrdersScreen = () => {
   const dispatch = useDispatch();
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const { orders = [], isLoading } = useSelector((state: RootState) => state.orders);
 
   useEffect(() => {
@@ -68,7 +71,7 @@ const OrdersScreen = () => {
         <View style={styles.orderHeader}>
           <View>
             <Text style={styles.orderId}>Order #{item.id || '---'}</Text>
-            <Text style={styles.orderDate}>{formatDate(item.created_at)}</Text>
+            <Text style={styles.orderDate}>{formatDate(item.createdAt)}</Text>
           </View>
           <View style={[styles.statusBadge, { backgroundColor: getStatusColor(item.status) + '20' }]}>
             <Text style={[styles.statusText, { color: getStatusColor(item.status) }]}>
@@ -100,7 +103,7 @@ const OrdersScreen = () => {
     );
   }
 
-  const displayOrders = orders.length > 0 ? orders : mockOrders;
+  const displayOrders: Order[] = orders.length > 0 ? (orders as Order[]) : mockOrders;
 
   return (
     <View style={styles.container}>
@@ -131,24 +134,26 @@ const OrdersScreen = () => {
   );
 };
 
-const mockOrders = [
+const mockOrders: Order[] = [
   {
     id: '1001',
     status: 'delivered',
-    created_at: '2024-04-05T10:30:00',
+    createdAt: '2024-04-05T10:30:00',
     total: 15.97,
+    address: '123 Ice Cream Ave',
     items: [
-      { name: 'Strawberry Bliss' },
-      { name: 'Chocolate Dream' },
+      { name: 'Strawberry Bliss', price: 7.99, quantity: 1 },
+      { name: 'Chocolate Dream', price: 7.98, quantity: 1 },
     ],
   },
   {
     id: '1002',
     status: 'processing',
-    created_at: '2024-04-07T14:20:00',
+    createdAt: '2024-04-07T14:20:00',
     total: 8.99,
+    address: '456 Sundae Street',
     items: [
-      { name: 'Mint Chip' },
+      { name: 'Mint Chip', price: 8.99, quantity: 1 },
     ],
   },
 ];

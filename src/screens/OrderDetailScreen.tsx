@@ -6,6 +6,9 @@ import {
   TouchableOpacity,
   StyleSheet,
 } from 'react-native';
+import type { StackScreenProps } from '@react-navigation/stack';
+import { ROUTES } from '../utils';
+import type { OrdersStackParamList } from '../navigations/MainNav';
 
 interface OrderItem {
   name: string;
@@ -16,20 +19,16 @@ interface OrderItem {
 interface Order {
   id: string;
   status: string;
-  created_at: string;
+  createdAt: string;
   items: OrderItem[];
   total: number;
   address: string;
 }
 
-interface OrderDetailScreenProps {
-  route: {
-    params: {
-      order: Order;
-    };
-  };
-  navigation: any; // You can use proper navigation types if available
-}
+type OrderDetailScreenProps = StackScreenProps<
+  OrdersStackParamList,
+  (typeof ROUTES)['ORDER_DETAIL']
+>;
 
 const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({ route, navigation }) => {
   const { order } = route.params || {};
@@ -76,12 +75,12 @@ const OrderDetailScreen: React.FC<OrderDetailScreenProps> = ({ route, navigation
               {order?.status || 'Pending'}
             </Text>
           </View>
-          <Text style={styles.orderDate}>{formatDate(order?.created_at)}</Text>
+          <Text style={styles.orderDate}>{formatDate(order?.createdAt)}</Text>
         </View>
 
         <View style={styles.section}>
           <Text style={styles.sectionTitle}>Order Items</Text>
-          {order?.items?.map((item, index) => (
+          {order?.items?.map((item: OrderItem, index: number) => (
             <View key={index} style={styles.itemRow}>
               <View style={styles.itemInfo}>
                 <Text style={styles.itemName}>{item.name}</Text>

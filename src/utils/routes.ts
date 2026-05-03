@@ -9,6 +9,6 @@ const ROUTES = {
   ORDERS: 'Orders',
   ORDER_DETAIL: 'OrderDetail',
   PROFILE: 'Profile',
-};
+} as const;
 
 export default ROUTES;

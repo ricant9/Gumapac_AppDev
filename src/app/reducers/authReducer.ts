@@ -15,6 +15,9 @@ interface User {
   id: string;
   email: string;
   name: string;
+  fullName?: string;
+  phone?: string;
+  address?: string;
   // Add other user properties as needed
 }
 

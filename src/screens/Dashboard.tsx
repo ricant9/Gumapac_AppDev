@@ -17,7 +17,7 @@ interface StatItem {
 }
 
 const Dashboard: React.FC = () => {
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
   const dispatch = useDispatch();
   const { token, user, isAuthenticated } = useSelector((state: RootState) => state.auth);
 
@@ -37,55 +37,6 @@ const Dashboard: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [error, setError] = useState<string | null>(null);
 
-  const handleBooking = () => {
-    console.log('Book Appointment pressed');
-    // TODO: navigate to create booking screen once it exists
-  };
-
-  useEffect(() => {
-    async function loadDashboard() {
-      if (!isAuthenticated || !token) {
-        setError('Please login to view dashboard data.');
-        return;
-      }
-
-      setLoading(true);
-      setError(null);
-
-      try {
-        const response = await fetch(`${API_BASE_URL}/dashboard`, {
-          method: 'GET',
-          headers: {
-            'Content-Type': 'application/json',
-            Authorization: `Bearer ${token}`,
-          },
-        });
-
-        if (!response.ok) {
-          throw new Error(`Backend returned ${response.status}`);
-        }
-
-        const data = await response.json();
-
-        // Adjust according to your backend shape:
-        if (Array.isArray(data.stats)) {
-          setDisplayStats(data.stats);
-        } else if (data.data?.stats) {
-          setDisplayStats(data.data.stats);
-        } else {
-          // fallback data still preserved.
-          setError('Received unexpected dashboard format, using cached stats.');
-        }
-      } catch (ex) {
-        console.warn('Dashboard fetch error:', ex);
-        setError((ex as Error).message || 'Could not load dashboard data');
-      } finally {
-        setLoading(false);
-      }
-    }
-
-    loadDashboard();
-  }, [isAuthenticated, token]);
 
   const handleBooking = () => {
     console.log('Book Appointment pressed');
@@ -128,7 +79,8 @@ const Dashboard: React.FC = () => {
         }
       } catch (ex) {
         console.warn('Dashboard fetch error:', ex);
-        setError(ex.message || 'Could not load dashboard data');
+        const err = ex as Error;
+        setError(err.message || 'Could not load dashboard data');
       } finally {
         setLoading(false);
       }

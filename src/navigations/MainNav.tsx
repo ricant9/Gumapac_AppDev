@@ -12,38 +12,47 @@ import OrdersScreen from '../screens/OrdersScreen';
 import OrderDetailScreen from '../screens/OrderDetailScreen';
 import ProfileScreen from '../screens/ProfileScreen';
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type HomeStackParamList = any;
+export type HomeStackParamList = {
+  [ROUTES.PRODUCTS]: undefined;
+  [ROUTES.PRODUCT_DETAIL]: { product: any };
+};
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type OrdersStackParamList = any;
+export type OrdersStackParamList = {
+  [ROUTES.ORDERS]: undefined;
+  [ROUTES.ORDER_DETAIL]: { order: any };
+};
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type MainTabParamList = any;
+export type MainTabParamList = {
+  HomeTab: undefined;
+  OrdersTab: undefined;
+  [ROUTES.CART]: undefined;
+  [ROUTES.PROFILE]: undefined;
+};
 
 const Tab = createBottomTabNavigator<MainTabParamList>();
-const Stack = createStackNavigator<HomeStackParamList | OrdersStackParamList>();
+const HomeStackNavigator = createStackNavigator<HomeStackParamList>();
+const OrdersStackNavigator = createStackNavigator<OrdersStackParamList>();
 
 // Home Stack (Products + Product Detail)
 const HomeStack: React.FC = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name={ROUTES.PRODUCTS} component={ProductsScreen} />
-    <Stack.Screen name={ROUTES.PRODUCT_DETAIL} component={ProductDetailScreen} />
-  </Stack.Navigator>
+  <HomeStackNavigator.Navigator screenOptions={{ headerShown: false }}>
+    <HomeStackNavigator.Screen name={ROUTES.PRODUCTS} component={ProductsScreen} />
+    <HomeStackNavigator.Screen name={ROUTES.PRODUCT_DETAIL} component={ProductDetailScreen} />
+  </HomeStackNavigator.Navigator>
 );
 
 // Orders Stack (Orders + Order Detail)
 const OrdersStack: React.FC = () => (
-  <Stack.Navigator screenOptions={{ headerShown: false }}>
-    <Stack.Screen name={ROUTES.ORDERS} component={OrdersScreen} />
-    <Stack.Screen name={ROUTES.ORDER_DETAIL} component={OrderDetailScreen} />
-  </Stack.Navigator>
+  <OrdersStackNavigator.Navigator screenOptions={{ headerShown: false }}>
+    <OrdersStackNavigator.Screen name={ROUTES.ORDERS} component={OrdersScreen} />
+    <OrdersStackNavigator.Screen name={ROUTES.ORDER_DETAIL} component={OrderDetailScreen} />
+  </OrdersStackNavigator.Navigator>
 );
 
 // Tab Icon Component
 interface TabIconProps {
   emoji: string;
-  label: string;
+  label?: string;
   focused: boolean;
 }
 

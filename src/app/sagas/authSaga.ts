@@ -1,16 +1,15 @@
 import { call, put, takeLatest, select } from 'redux-saga/effects';
-import { Generator } from 'redux-saga';
-import { 
-  LOGIN_REQUEST, 
-  LOGIN_SUCCESS, 
+import {
+  LOGIN_REQUEST,
+  LOGIN_SUCCESS,
   LOGIN_FAILURE,
-  REGISTER_REQUEST,   
+  REGISTER_REQUEST,
   REGISTER_SUCCESS,
   REGISTER_FAILURE,
   GET_USER_REQUEST,
   GET_USER_SUCCESS,
   GET_USER_FAILURE,
-  LOGOUT 
+  LOGOUT,
 } from '../reducers/authReducer';
 import { authLogin, authRegister, authMe, authLogout } from '../api/auth';
 import { RootState } from '../store';

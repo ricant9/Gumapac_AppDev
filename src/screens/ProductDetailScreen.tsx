@@ -8,6 +8,9 @@ import {
   ScrollView,
 } from 'react-native';
 import { useDispatch } from 'react-redux';
+import type { StackScreenProps } from '@react-navigation/stack';
+import { ROUTES } from '../utils';
+import type { HomeStackParamList } from '../navigations/MainNav';
 
 interface Product {
   name: string;
@@ -17,14 +20,10 @@ interface Product {
   description?: string;
 }
 
-interface ProductDetailScreenProps {
-  route: {
-    params: {
-      product: Product;
-    };
-  };
-  navigation: any;
-}
+type ProductDetailScreenProps = StackScreenProps<
+  HomeStackParamList,
+  (typeof ROUTES)['PRODUCT_DETAIL']
+>;
 
 const ProductDetailScreen: React.FC<ProductDetailScreenProps> = ({ route, navigation }) => {
   const { product } = route.params || {};

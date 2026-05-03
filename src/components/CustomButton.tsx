@@ -6,12 +6,14 @@ interface CustomButtonProps {
   textStyle?: StyleProp<TextStyle>;
   label: string;
   onPress: () => void;
+  children?: React.ReactNode;
+  disabled?: boolean;
 }
 
-const CustomButton: React.FC<CustomButtonProps> = ({ containerStyle, textStyle, label, onPress }) => {
+const CustomButton: React.FC<CustomButtonProps> = ({ containerStyle, textStyle, label, onPress, children, disabled }) => {
   return (
     <View style={containerStyle}>
-      <TouchableOpacity onPress={onPress}>
+      <TouchableOpacity onPress={onPress} disabled={disabled}>
         <View
           style={{
             alignItems: 'center',
@@ -20,6 +22,7 @@ const CustomButton: React.FC<CustomButtonProps> = ({ containerStyle, textStyle, 
           }}
         >
           <Text style={textStyle}>{label}</Text>
+          {children}
         </View>
       </TouchableOpacity>
     </View>

@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Alert, Text, TouchableOpacity, View, ActivityIndicator, ImageBackground, StyleSheet } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import type { StackNavigationProp } from '@react-navigation/stack';
 import { useDispatch, useSelector } from 'react-redux';
 import { GoogleSigninButton } from '@react-native-google-signin/google-signin';
 import CustomButton from '../../components/CustomButton';
@@ -10,13 +11,14 @@ import IMG from '../../utils/images';
 import { LOGIN_REQUEST } from '../../app/reducers/authReducer';
 import { _signInWithGoogle } from '../../utils/firebase';
 import type { RootState } from '../../app/store';
+import type { AuthStackParamList } from '../../navigations/AuthNav';
 
 const Login = () => {
   const [emailAdd, setEmailAdd] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [imageError, setImageError] = useState<boolean>(false);
 
-  const navigation = useNavigation();
+  const navigation = useNavigation<StackNavigationProp<AuthStackParamList>>();
   const dispatch = useDispatch();
   
   // Get loading, error, and auth state from Redux
@@ -203,6 +205,6 @@ const styles = StyleSheet.create({
     textDecorationLine: 'underline' as const,
     fontSize: 14,
   },
-};
+});
 
 export default Login;
